@@ -24,3 +24,9 @@ p!(
   Foo.call("/bar/5"),
   Foo.call("/bar/wrong"),
 )
+
+p!(
+  Foo.gen_foo,
+  Foo.gen_foo("testing"),
+  Foo.gen_bar(id: 5),
+)
