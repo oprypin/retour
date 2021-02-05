@@ -11,12 +11,14 @@ module Retour
   module HTTPRouter
     macro included
       macro finished
+        {% verbatim do %}
         {% for httpm in [Retour::Get, Retour::Post, Retour::Put, Retour::Patch, Retour::Delete, Retour::Link, Retour::Unlink, Retour::Head] %}
           Retour.routes({
             {% for method in @type.methods %}{% for annot in method.annotations(httpm) %}\
               {{ annot[0] }} => {{ method.name.id }},
             {% end %}{% end %}\
           } of String => String, default: "[^/]+?", method: _{{ httpm.name.split("::")[-1].downcase.id }})
+        {% end %}
         {% end %}
       end
 

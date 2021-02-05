@@ -2,6 +2,7 @@ require "../src/http"
 
 module Foo
   extend self
+  include Retour::HTTPRouter
 
   @[Retour::Get("/foo")]
   @[Retour::Get("/foo/{x}")]
@@ -13,8 +14,6 @@ module Foo
   def bar(id)
     "bar(#{id})"
   end
-
-  include Retour::HTTPRouter
 end
 
 p!(
