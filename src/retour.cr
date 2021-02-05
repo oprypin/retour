@@ -67,13 +67,17 @@ module Retour
 
     {% gi = 0 %}
     def {{method.id}}(input : String, *args, **kwargs)
-      if !(m = %r(\A(?:{{ regex.join("").id }})\Z).match(input))
+      {% if regex.empty? %}
         raise Retour::NotFound.new(input)
-      {% for func in funcs %}\
-      elsif m[{{ gi += 1 }}]?
-        {{ func[:name] }}(*args, **kwargs{% for arg in func[:args] %}, {{ arg }}: m[{{ gi += 1 }}]{% end %})
+      {% else %}
+        if !(m = %r(\A(?:{{ regex.join("").id }})\Z).match(input))
+          raise Retour::NotFound.new(input)
+        {% for func in funcs %}\
+        elsif m[{{ gi += 1 }}]?
+          {{ func[:name] }}(*args, **kwargs{% for arg in func[:args] %}, {{ arg }}: m[{{ gi += 1 }}]{% end %})
+        {% end %}
+        end
       {% end %}
-      end
     end
   end
 end
