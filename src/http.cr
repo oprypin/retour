@@ -1,4 +1,5 @@
 require "http"
+require "uri"
 
 require "./retour"
 
@@ -34,7 +35,7 @@ module Retour
       end
 
       def call(context : HTTP::Server::Context, *args, **kwargs)
-        call(context.request.method, context.request.path, *args, **kwargs)
+        call(context.request.method, URI.decode(context.request.path), *args, **kwargs)
       end
     end
   end
