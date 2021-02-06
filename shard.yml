@@ -1,0 +1,12 @@
+name: retour
+version: 0.1.0
+
+authors:
+  - Oleh Prypin <oleh@pryp.in>
+
+description: |
+  Regex-based router
+
+license: MIT
+
+crystal: '>= 0.35.1'

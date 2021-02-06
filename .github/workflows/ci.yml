@@ -1,0 +1,33 @@
+on:
+  push:
+  pull_request:
+    branches: [master]
+  schedule:
+    - cron: '0 6 * * 6'
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            crystal: nightly
+          - os: macos-latest
+          - os: windows-latest
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Download source
+        uses: actions/checkout@v2
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1
+        with:
+          crystal: ${{ matrix.crystal }}
+      - name: Run tests
+        run: crystal spec
+      - name: Run examples
+        run: |
+          echo examples/*.cr | xargs -n1 -t crystal
+        shell: bash
+      - name: Check formatting
+        run: crystal tool format && git diff --exit-code
+        if: matrix.crystal == 'latest'
