@@ -70,19 +70,25 @@ module Retour
 
     {% gi = 0 %}
     def {{method.id}}(input : String, *args, **kwargs)
-      {% if regex.empty? %}
+      {% if regex.empty? %}\
+        {% regex = "@^" %}  # Never matches
         raise Retour::NotFound.new(input)
       {% else %}
-        if !(m = %r(\A(?:{{ regex.join("").id }})\Z).match(input))
+        {% regex = "(?:" + regex.join("") + ")" %}
+        if !(m = %r(\A(?:{{ regex.id }})\Z).match(input))
           raise Retour::NotFound.new(input)
         {% for func in funcs %}\
         elsif m[{{ gi += 1 }}]?
           {{ func[:name] }}(*args, **kwargs{% for arg in func[:args] %}, {{ arg }}: m[{{ gi += 1 }}]{% end %})
-        {% end %}
+        {% end %}\
         else
           raise Retour::Error.new("BUG: Retour regex matched but didn't find any group")
         end
-      {% end %}
+      {% end %}\
+    end
+
+    def self.{{method.id}}_regex : Regex
+      %r({{ regex.id }})
     end
   end
 end
