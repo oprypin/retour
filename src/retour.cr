@@ -1,5 +1,8 @@
 module Retour
-  class NotFound < Exception
+  class Error < Exception
+  end
+
+  class NotFound < Error
   end
 
   macro routes(routes, default = ".+?", method = :call)
@@ -76,6 +79,8 @@ module Retour
         elsif m[{{ gi += 1 }}]?
           {{ func[:name] }}(*args, **kwargs{% for arg in func[:args] %}, {{ arg }}: m[{{ gi += 1 }}]{% end %})
         {% end %}
+        else
+          raise Retour::Error.new("BUG: Retour regex matched but didn't find any group")
         end
       {% end %}
     end
