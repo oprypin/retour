@@ -1,0 +1,10 @@
+name: examples
+version: 0.1.0
+
+development_dependencies:
+  amber_router:
+    github: amberframework/router
+  radix:
+    github: luislavena/radix
+
+crystal: '>= 0.35.0'
