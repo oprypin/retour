@@ -18,7 +18,7 @@ module Retour
             {% for method in @type.methods %}{% for annot in method.annotations(httpm) %}\
               {{ annot[0] }} => {{ method.name.id }},
             {% end %}{% end %}\
-          } of String => String, default: %r([^/]+?), method: _{{ httpm.name.split("::")[-1].downcase.id }})
+          } of String => String, default: "[^/]+?", method: _{{ httpm.name.split("::")[-1].downcase.id }})
         {% end %}
         {% end %}
       end

@@ -118,32 +118,32 @@ module RetourApp
     "/get"
   end
 
-  @[Retour::Get("/get/users/#{id}")]
+  @[Retour::Get("/get/users/{id}")]
   def users(id)
     "/get/users/<#{id}>"
   end
 
-  @[Retour::Get("/get/users/#{id}/books")]
+  @[Retour::Get("/get/users/{id}/books")]
   def users_books(id)
     "/get/users/<#{id}>/books"
   end
 
-  @[Retour::Get("/get/books/#{id}")]
+  @[Retour::Get("/get/books/{id}")]
   def books(id)
     "/get/books/<#{id}>"
   end
 
-  @[Retour::Get("/get/books/#{id}/chapters")]
+  @[Retour::Get("/get/books/{id}/chapters")]
   def book_chapters(id)
     "/get/books/<#{id}>/chapters"
   end
 
-  @[Retour::Get("/get/books/#{id}/authors")]
+  @[Retour::Get("/get/books/{id}/authors")]
   def book_authors(id)
     "/get/books/<#{id}>/authors"
   end
 
-  @[Retour::Get("/get/books/#{id}/pictures")]
+  @[Retour::Get("/get/books/{id}/pictures")]
   def book_pictures(id)
     "/get/books/<#{id}>/pictures"
   end
@@ -153,32 +153,32 @@ module RetourApp
     "/get/a/b/c/d/e/f/g/h/i/j/k/l/m/n/o/p/q/r/s/t/u/v/w/x/y/z"
   end
 
-  @[Retour::Get("/get/var/#{b}/#{c}/#{d}/#{e}/#{f}/#{g}/#{h}/#{i}/#{j}/#{k}/#{l}/#{m}/#{n}/#{o}/#{p}/#{q}/#{r}/#{s}/#{t}/#{u}/#{v}/#{w}/#{x}/#{y}/#{z}")]
+  @[Retour::Get("/get/var/{b}/{c}/{d}/{e}/{f}/{g}/{h}/{i}/{j}/{k}/{l}/{m}/{n}/{o}/{p}/{q}/{r}/{s}/{t}/{u}/{v}/{w}/{x}/{y}/{z}")]
   def variable_alphabet(b, c, d, e, f, g, h, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w, x, y, z)
     "/get/var/<#{b}>/<#{c}>/<#{d}>/<#{e}>/<#{f}>/<#{g}>/<#{h}>/<#{i}>/<#{j}>/<#{k}>/<#{l}>/<#{m}>/<#{n}>/<#{o}>/<#{p}>/<#{q}>/<#{r}>/<#{s}>/<#{t}>/<#{u}>/<#{v}>/<#{w}>/<#{x}>/<#{y}>/<#{z}>"
   end
 
-  @[Retour::Get("/get/foobarbizfoobarbizfoobarbizfoobarbizfoobarbizbat/#{id}")]
+  @[Retour::Get("/get/foobarbizfoobarbizfoobarbizfoobarbizfoobarbizbat/{id}")]
   def foobar_bat(id)
     "/get/foobarbizfoobarbizfoobarbizfoobarbizfoobarbizbat/<#{id}>"
   end
 
-  @[Retour::Get("/get/foobarbizfoobarbizfoobarbizfoobarbizfoobarbizbom/#{id}")]
+  @[Retour::Get("/get/foobarbizfoobarbizfoobarbizfoobarbizfoobarbizbom/{id}")]
   def foobar_bom(id)
     "/get/foobarbizfoobarbizfoobarbizfoobarbizfoobarbizbom/<#{id}>"
   end
 
-  @[Retour::Get("/post/#{rest /.*/}")]
+  @[Retour::Get("/post/{rest:.*}")]
   def catchall(rest)
     "/post/<#{rest}>"
   end
 
-  @[Retour::Get("/put/products/#{slug /.*/}/dp/#{id}")]
+  @[Retour::Get("/put/products/{slug:.*}/dp/{id}")]
   def amazon_style_url(slug, id)
     "/put/products/<#{slug}>/dp/<#{id}>"
   end
 
-  @[Retour::Get("/get/test/#{id /foo_[0-9]+/}")]
+  @[Retour::Get("/get/test/{id:foo_[0-9]+}")]
   def requirement_path(id)
     "/get/test/<#{id}>"
   end
