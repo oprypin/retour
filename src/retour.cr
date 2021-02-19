@@ -2,7 +2,7 @@ module Retour
   class Error < Exception
   end
 
-  class NotFound < Error
+  struct NotFound
   end
 
   macro routes(routes, default = /.+?/, method = :call)
@@ -28,20 +28,20 @@ module Retour
     {% end %}\
 
     {% for func in funcs %}\
-    def self.gen_{{ func[:name] }}({{*func[:params]}}) : String
-      String.interpolation({{*func[:args]}})
+    def self.gen_{{ func[:name] }}({{ *func[:params] }}) : String
+      String.interpolation({{ *func[:args] }})
     end
     {% end %}\
 
     {% gi = 0 %}
-    def {{method.id}}(input : String, *args, **kwargs)
+    def {{ method.id }}(input : String, *args, **kwargs)
       {% if regex.empty? %}\
         {% regex = "@^" %}  # Never matches
-        raise Retour::NotFound.new(input)
+        return Retour::NotFound.new
       {% else %}
         {% regex = "(?:" + regex.join("") + ")" %}
         if !(m = %r(\A(?:{{ regex.id }})\Z).match(input))
-          raise Retour::NotFound.new(input)
+          return Retour::NotFound.new
         {% for func in funcs %}\
         elsif m[{{ gi += 1 }}]?
           {{ func[:name] }}(*args, **kwargs{% for param in func[:params] %}, {{ param }}: m[{{ gi += 1 }}]{% end %})
@@ -52,7 +52,7 @@ module Retour
       {% end %}\
     end
 
-    def self.{{method.id}}_regex : Regex
+    def self.{{ method.id }}_regex : Regex
       %r({{ regex.id }})
     end
   end

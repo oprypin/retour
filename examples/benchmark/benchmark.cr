@@ -200,7 +200,7 @@ end
 
   Benchmark.ips(*{% if flag?(:release) %}{3, 1}{% else %}{0.01, 0.001}{% end %}) do |x|
     x.report("retour") do
-      actual = RetourApp._get(path) rescue nil
+      actual = RetourApp._get(path).as?(String)
       raise "#{actual.inspect} != #{expected.inspect}" if actual != expected
     end
     x.report("amber") do

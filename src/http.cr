@@ -30,7 +30,7 @@ module Retour
           _{{ httpm.downcase.id }}(path, *args, **kwargs)
         {% end %}\
         else
-          raise Retour::NotFound.new(path)
+          return Retour::NotFound.new
         end
       end
 
