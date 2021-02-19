@@ -5,12 +5,12 @@ module Foo
   include Retour::HTTPRouter
 
   @[Retour::Get("/foo")]
-  @[Retour::Get("/foo/{x}")]
+  @[Retour::Get("/foo/#{x}")]
   def foo(x = "")
     "foo(#{x})"
   end
 
-  @[Retour::Get("/bar/{id:[0-9]+}")]
+  @[Retour::Get("/bar/#{id /[0-9]+/}")]
   def bar(id)
     "bar(#{id})"
   end

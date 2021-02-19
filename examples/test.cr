@@ -12,10 +12,10 @@ module Foo
   end
 
   Retour.routes({
-    %q(/foo)             => :foo,
-    %q(/foo/{x})         => :foo,
-    %q(/bar/{id:[0-9]+}) => :bar,
-  }, default: "[^/]+")
+    "/foo"                => :foo,
+    "/foo/#{x}"           => :foo,
+    "/bar/#{id /[0-9]+/}" => :bar,
+  }, default: %r([^/]+))
 end
 
 p!(
