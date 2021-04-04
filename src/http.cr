@@ -9,6 +9,10 @@ module Retour
     end
   {% end %}
 
+  def self.percent_encode(uri) : String
+    String.build { |io| URI.encode(uri, io, &->URI.unreserved?(UInt8)) }
+  end
+
   module HTTPRouter
     macro included
       macro finished
@@ -18,7 +22,7 @@ module Retour
             {% for method in @type.methods %}{% for annot in method.annotations(httpm) %}\
               {{ annot[0] }} => {{ method.name.id }},
             {% end %}{% end %}\
-          } of String => String, default: "[^/]+?", method: _{{ httpm.name.split("::")[-1].downcase.id }})
+          } of String => String, default: "[^/]+?", method: _{{ httpm.name.split("::")[-1].downcase.id }}, convert_item: Retour.percent_encode)
         {% end %}
         {% end %}
       end
