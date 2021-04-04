@@ -5,7 +5,7 @@ module Retour
   struct NotFound
   end
 
-  macro routes(routes, default = ".+?", method = :call, convert_item = "".id)
+  macro routes(routes, default = ".+?", method = :call, convert_item = "")
     {% regex = [] of String %}\
     {% funcs = [] of {name: String, args: Array(String), texts: Array(String)} %}\
     {% for route, func, ri in routes %}\
@@ -64,7 +64,7 @@ module Retour
 
     {% for func in funcs %}\
     def self.gen_{{ func[:name] }}({% for arg, i in func[:args] %}{{ arg }} a{{ i + 1 }}, {% end %}) : String
-      String.interpolation({% for text, i in func[:texts] %}{% if i > 0 %}({{convert_item}} a{{ i }}.to_s), {% end %}{{ text }}, {% end %})
+      String.interpolation({% for text, i in func[:texts] %}{% if i > 0 %}({{convert_item.id}} a{{ i }}.to_s), {% end %}{{ text }}, {% end %})
     end
     {% end %}\
 
